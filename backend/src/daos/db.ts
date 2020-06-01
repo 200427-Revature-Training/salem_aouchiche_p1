@@ -10,7 +10,6 @@ export const db = new Pool({
 });
 
 //console.log(JSON.stringify(db)); 
-
 db.on('connect', (client) => {
     client.query(`SET search_path TO my_schema, project1`);
 });

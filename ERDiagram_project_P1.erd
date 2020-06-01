@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<diagram version="1" name="ERDiagram_project_P1">
+	<entities>
+		<data-source id="postgres-jdbc-1726d8cc9e9-26ae4f6ccff3a247">
+			<entity id="1" name="ers_reimbursement" fq-name="public.ers_reimbursement">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="2" name="ers_reimbursement_status" fq-name="public.ers_reimbursement_status">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="3" name="ers_reimbursement_type" fq-name="public.ers_reimbursement_type">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="4" name="ers_user_roles" fq-name="public.ers_user_roles">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+			<entity id="5" name="ers_users" fq-name="public.ers_users">
+				<path name="public"/>
+				<path name="postgres"/>
+			</entity>
+		</data-source>
+	</entities>
+	<relations>
+		<relation name="ers_reimbursement_reimbursement_status_id_fkey" fq-name="public.ers_reimbursement.ers_reimbursement_reimbursement_status_id_fkey" type="fk" pk-ref="2" fk-ref="1"/>
+		<relation name="ers_reimbursement_reimbursement_type_id_fkey" fq-name="public.ers_reimbursement.ers_reimbursement_reimbursement_type_id_fkey" type="fk" pk-ref="3" fk-ref="1"/>
+		<relation name="ers_users_user_role_id_fkey" fq-name="public.ers_users.ers_users_user_role_id_fkey" type="fk" pk-ref="4" fk-ref="5"/>
+		<relation name="ers_reimbursement_reimbursement_author_fkey" fq-name="public.ers_reimbursement.ers_reimbursement_reimbursement_author_fkey" type="fk" pk-ref="5" fk-ref="1"/>
+		<relation name="ers_reimbursement_reimbursement_resolver_fkey" fq-name="public.ers_reimbursement.ers_reimbursement_reimbursement_resolver_fkey" type="fk" pk-ref="5" fk-ref="1"/>
+	</relations>
+</diagram>
