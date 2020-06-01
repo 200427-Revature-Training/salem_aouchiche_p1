@@ -42,7 +42,7 @@ interface Exists {
  */
 
 export async function saveUser(user: User): Promise<User> {
-    const sql = `INSERT INTO USERS(ERS_USERNAME,ERS_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_EMAIL, USER_ROLE_ID) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *`;
+    const sql = `INSERT INTO ERS_USERS (ERS_USERNAME,ERS_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_EMAIL, USER_ROLE_ID) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *`;
     const result= await db.query<User>(sql, [
         user.ers_username,
         user.ers_password,

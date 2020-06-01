@@ -16,11 +16,11 @@ export function saveUser(user: User): Promise<User> {
     console.log(JSON.stringify(user))
     // add new user from the users:
     const newUser = new User(
+        user.ers_username,
+        user.ers_password,
         user.user_first_name,
         user.user_last_name,
-        user.ers_username,
         user.user_email,
-        user.ers_password,
         user.user_role_id
         ); 
         
