@@ -1,10 +1,10 @@
 export class User {
-    ers_username: string;
-    ers_password: string;
+    ers_username:    string;
+    ers_password:    string;
     user_first_name: string;
-    user_last_name: string;
-    user_email: string;
-    user_role_id: number;  
+    user_last_name:  string;
+    user_email:      string;
+    user_role_id:    number;  
 
     constructor (ers_username:string, ers_password: string, user_first_name: string, user_last_name: string, user_email: string, user_role_id: number) {
             this.ers_username = ers_username;

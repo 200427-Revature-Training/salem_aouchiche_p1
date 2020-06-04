@@ -21,7 +21,6 @@ const log = bunyan.createLogger({name: "myProject_P1"});
     });
 });
 
-
  //    http://localhost:3000/users/1
  //   Retrieves a single user from the database by id
  //   If the users does not exist, sends 404

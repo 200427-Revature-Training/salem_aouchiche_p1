@@ -5,7 +5,11 @@ import {User, UserTable } from '../models/User';
 // function async/wait:
 export async function getAllUsers():Promise<User[]> {
     // console.log('getAllUsers');
-     const sql = 'SELECT * FROM courses';
+     //const sql = 'SELECT * FROM ERS_USERS';
+
+     const sql= `SELECT EU.ERS_USERNAME,EU.USER_FIRST_NAME, EU.USER_LAST_NAME, EU.USER_EMAIL, EUR.USER_ROLE 
+     FROM ERS_USERS EU JOIN ERS_USER_ROLES EUR ON EU.USER_ROLE_ID= EUR.ERS_USER_ROLES_ID `; 
+
      const result = await db.query<UserTable>(sql,[]);
      return result.rows;
  }
@@ -17,7 +21,9 @@ export async function getUserById(userId: number): Promise<User> {
         return undefined;
     }
     
-    const sql =`SELECT * FROM USERS WHERE USERS_ID = $1`;
+    //const sql =`SELECT * FROM ERS_USERS WHERE ERS_USERS_ID = $1`;
+    const sql= `SELECT EU.ERS_USERNAME, EU.USER_FIRST_NAME, EU.USER_LAST_NAME, EU.USER_EMAIL, EUR.USER_ROLE 
+    FROM ERS_USERS EU JOIN ERS_USER_ROLES EUR ON EU.USER_ROLE_ID= EUR.ERS_USER_ROLES_ID WHERE ERS_USERS_ID = $1`; 
     const result = await db.query<User>(sql, [userId]);
     console.log(result.rows[0]); 
     return result.rows[0];
@@ -27,7 +33,7 @@ export async function getUserById(userId: number): Promise<User> {
     Function to check if a User exists with a given ID
 */
 export async function userExists(userId: number): Promise<boolean> {
-    const sql = `SELECT EXISTS(SELECT id FROM USERS WHERE USERS_ID = $1);`;
+    const sql = `SELECT EXISTS(SELECT ERS_USERS_ID FROM ERS_USERS WHERE ERS_USERS_ID = $1);`;
     const result = await db.query<Exists>(sql, [userId]);
     return result.rows[0].exists;
 }
@@ -42,7 +48,9 @@ interface Exists {
  */
 
 export async function saveUser(user: User): Promise<User> {
-    const sql = `INSERT INTO ERS_USERS (ERS_USERNAME,ERS_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_EMAIL, USER_ROLE_ID) VALUES ($1, $2, $3, $4, $5,$6) RETURNING *`;
+    const sql = `INSERT INTO ERS_USERS (ERS_USERNAME,ERS_PASSWORD, USER_FIRST_NAME, USER_LAST_NAME, USER_EMAIL, USER_ROLE_ID) 
+    VALUES ($1, $2, $3, $4, $5,$6) RETURNING *`;
+    
     const result= await db.query<User>(sql, [
         user.ers_username,
         user.ers_password,
@@ -56,5 +64,8 @@ return result.rows[0];
 
 }
 
+/**
+ * function get user by email and password. 
+ */
 
 

@@ -3,6 +3,7 @@ import bodyParser from 'body-parser';
 import { db } from './daos/db';
 import bunyan from 'bunyan'; 
 import {userRouter} from './routers/user-router';
+import { reimbursementRouter } from './routers/reimbursement-router';
 
 
 const app = express();
@@ -16,6 +17,7 @@ log.warn('server started');
 
 /* Routers*/
 app.use('/users', userRouter);
+app.use('/reimbursement', reimbursementRouter); 
 
 
 process.on('unhandledRejection', () => {
