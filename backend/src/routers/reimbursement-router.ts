@@ -23,12 +23,12 @@ const log = bunyan.createLogger({name: "myProject_P1"});
 });
 
  /**
-  *  http://localhost:3000/users/1
+  *  http://localhost:3000/reimbursement/1
      Retrieves a single reimbursement from the database by id
      If the users does not exist, sends 404
     */ 
 
- reimbursementRouter.get('/:id/', async (request, response, next) => {
+    reimbursementRouter.get('/:id/', async (request, response, next) => {
     //log.info('userRouter works, users(id).'); 
     const id: number = parseInt(request.params.id);
     log.info('reimbursementRouter get reimbursement by ID works !!!'); 
@@ -45,7 +45,7 @@ const log = bunyan.createLogger({name: "myProject_P1"});
     next();
 });
 
-/*   POST http://localhost:3000/users
+/*   POST http://localhost:3000/reimbursement
     Creates a New Reimbursement and saves them to the database.
     Returns the inserted data as JSON with status 201.
 */

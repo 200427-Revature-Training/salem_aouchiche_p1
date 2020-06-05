@@ -68,4 +68,3 @@ return result.rows[0];
  * function get user by email and password. 
  */
 
-
