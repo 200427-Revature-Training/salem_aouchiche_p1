@@ -11,6 +11,10 @@ export function getUserById(id: number): Promise<User> {
     return userdao.getUserById(id);
 }
 
+export function getUserByEmail(email:string): Promise<User> {
+    return userdao.getUserByEmail(email); 
+
+}
 
 export function saveUser(user: User): Promise<User> {
     console.log(JSON.stringify(user))

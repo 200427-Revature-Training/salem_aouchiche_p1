@@ -65,6 +65,21 @@ return result.rows[0];
 }
 
 /**
- * function get user by email and password. 
+ * function get user by email. 
  */
+
+export async function getUserByEmail(userEmail: String): Promise<User> {
+    console.log("userEmail --"+ userEmail ); 
+    //const sql =`SELECT * FROM ERS_USERS WHERE ERS_USERS_ID = $1`;
+    /*
+    const sql= `SELECT EU.ERS_USERS_ID, EU.ERS_USERNAME, EU.USER_FIRST_NAME, EU.USER_LAST_NAME, EU.USER_EMAIL, EU.ERS_PASSWORD, EUR.USER_ROLE 
+    FROM ERS_USERS EU JOIN ERS_USER_ROLES EUR ON EU.USER_ROLE_ID= EUR.ERS_USER_ROLES_ID WHERE EU.USER_EMAIL = $1`; 
+    */
+    const sql= `SELECT EU.ERS_USERS_ID, EU.USER_EMAIL, EU.ERS_PASSWORD, EUR.USER_ROLE 
+        FROM ERS_USERS EU JOIN ERS_USER_ROLES EUR ON EU.USER_ROLE_ID= EUR.ERS_USER_ROLES_ID WHERE EU.USER_EMAIL = $1`; 
+    const result = await db.query<User>(sql, [userEmail]);
+    console.log("userEmail ++"+ userEmail ); 
+    console.log(result.rows[0]); 
+    return result.rows[0];
+}
 
