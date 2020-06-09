@@ -40,7 +40,6 @@ const SignIn:React.FC=()=> {
   let history = useHistory();
   /** initial default values */
   const formDefaultValue={   
-
     Email:"",
     Password:"",
     Role:"",
@@ -48,7 +47,6 @@ const SignIn:React.FC=()=> {
     PasswordsError:""
 }
   /** use states */
-
   const [formValues, setFormValues]=useState(formDefaultValue); 
   const {Email,Password,EmailError,PasswordsError,Role}=formValues
   /** update states*/

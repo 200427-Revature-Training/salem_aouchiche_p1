@@ -36,8 +36,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const SignUp:React.FC= () => {
-  let history = useHistory()
   const classes = useStyles();
+  let history = useHistory(); 
   const formDefaultValue={
         ers_username:"", 
         ers_password:"",
@@ -46,58 +46,83 @@ const SignUp:React.FC= () => {
         user_email:"",
         user_role_id:"",
         ers_username_error:"", 
-        ers_passwordError:"",
-        user_first_nameError:"",
-        user_last_nameError:"",
-        user_emailError:"",
-        user_role_idError:""
-
+        ers_password_error:"",
+        user_first_name_error:"",
+        user_last_name_error:"",
+        user_email_error:"",
+        user_role_id_error:""
   }
+
   const [formValues, setFormValues]=useState(formDefaultValue)
-    let { ers_username, user_last_name,user_first_name,user_email,ers_password,user_emailError,ers_passwordError, user_last_nameError,user_first_nameError, ers_username_error,user_role_id}=formValues
+    let { ers_username, 
+          ers_password, 
+          user_first_name,
+          user_last_name, 
+          user_email, 
+          user_role_id,
+          ers_username_error,     
+          ers_password_error, 
+          user_first_name_error,
+          user_last_name_error,
+          user_email_error,
+          user_role_id_error
+        }= formValues
+
     const changeHndler=(e:any)=>{
-        const target=e.target
-        setFormValues(prevState=>({
+          const target=e.target; 
+          setFormValues(prevState=>({
           ...prevState,
           [target.name]:target.value
-        }))
+          }))
         }
-        const validate=()=>{
-            let ers_username_error=""; 
-            let user_emailError="";
-            let ers_passwordError ="";
-            let  user_last_nameError=""
-            let user_first_nameError="";
-            let  user_role_idError=""
+
+    /** Validation */    
+    const validate=()=>{
+            let ers_username_error="";
+            let ers_password_error ="";
+            let user_first_name_error="";                    
+            let user_last_name_error=""; 
+            let user_email_error="";
+            let user_role_id_error=""; 
+            
+            // Add function to require some features in Sign Up form :
+            // String is long/short, capital letters , includes characters %, #,  or exlude tags...
+            
+            /** Check username */
             if(!ers_username){
-              ers_username_error= "Username Requiered ";
-         }
-            if(! user_last_name){
-                 user_last_nameError="Last Name Requiered ";
+              ers_username_error= " Username is requiered ! ";
             }
+            /** Check Password */
+            if(!(ers_password.length<8)){
+              ers_password_error="Password is short !";
+            }
+            
+            /** Check First name */
             if(!user_first_name){
-                user_first_nameError="First Name Requiered ";
+                user_first_name_error="First Name is requiered !";
             }
-            if(!ers_password){
-             ers_passwordError="Password Requiered ";
-         }
-         
-             if(!user_email.includes("@")){
-               user_emailError="user_email is invalid";
-             }
-             if(!user_role_id){
-              user_role_id="user_role_id is Requiered ";
-          }
-             
-             if(ers_username_error || user_emailError || ers_passwordError || user_last_nameError ||user_first_nameError || user_role_idError){
+            /** Check last name */
+            if(! user_last_name){
+              user_last_name_error="Last Name is requiered !";
+            }
+            /** Check email */
+            if(!user_email.includes("@")){
+               user_email_error="user_email is invalid !";
+            }
+            /** Check role */
+            if(!user_role_id){
+              user_role_id_error="user_role_id is requiered !";
+            }
+                         
+            if(ers_username_error || ers_password_error|| user_first_name_error||user_last_name_error||user_email_error||user_role_id_error){
                  setFormValues(prevState=>({
                      ...prevState,
                      ers_username_error, 
-                     user_emailError:user_emailError,
-                     ers_passwordError:ers_passwordError,
-                      user_last_nameError: user_last_nameError,
-                     user_first_nameError:user_first_nameError,
-                     user_role_idError:user_role_idError
+                     ers_password_error:ers_password_error,   
+                     user_first_name_error:user_first_name_error,
+                     user_last_name_error: user_last_name_error,
+                     user_email_error:user_email_error,
+                     user_role_id_error:user_role_id_error
                    }))
                  return false
              }
@@ -106,10 +131,8 @@ const SignUp:React.FC= () => {
 
         const submitHandler= (e:any)=>{
             e.preventDefault()
-            console.log("formValues "+JSON.stringify(formValues)); 
-            
+            console.log("formValues "+JSON.stringify(formValues));             
             const isValidate= validate()
-            
              if(isValidate){
                   axios.post('http://localhost:3000/users/',formValues).then((res)=>{
                     console.log(res)
@@ -121,8 +144,6 @@ const SignUp:React.FC= () => {
               console.log("error occurred!");
               history.push("/SignUp");
             }
-           
-        
         }
 
   return (<Container component="main" maxWidth="xs">
@@ -149,7 +170,7 @@ const SignUp:React.FC= () => {
             autoComplete="ers_username"
             onChange={changeHndler}
           />
-           <div style={{fontSize:12,color:"red"}} >{ user_last_nameError}</div>
+           <div style={{fontSize:12,color:"red"}} >{ user_last_name_error}</div>
         </Grid>
         
 
@@ -166,7 +187,7 @@ const SignUp:React.FC= () => {
             autoComplete="current-password"
             onChange={changeHndler}
           />
-           <div style={{fontSize:12,color:"red"}} >{ers_passwordError}</div>
+           <div style={{fontSize:12,color:"red"}} >{ers_password_error}</div>
         </Grid>
 
 
@@ -183,7 +204,7 @@ const SignUp:React.FC= () => {
             autoFocus
             onChange={changeHndler}
           />
-           <div style={{fontSize:12,color:"red"}} >{user_first_nameError}</div>
+           <div style={{fontSize:12,color:"red"}} >{user_first_name_error}</div>
         </Grid>
         
       <Grid item xs={12} sm={6}>
@@ -198,7 +219,7 @@ const SignUp:React.FC= () => {
             autoComplete="user_last_name"
             onChange={changeHndler}
           />
-           <div style={{fontSize:12,color:"red"}} >{ user_last_nameError}</div>
+           <div style={{fontSize:12,color:"red"}} >{ user_last_name_error}</div>
         </Grid>
        
         <Grid item xs={12}>
@@ -213,7 +234,7 @@ const SignUp:React.FC= () => {
             value={user_email}
             onChange={changeHndler}
           />
-           <div style={{fontSize:12,color:"red"}} >{user_emailError}</div>
+           <div style={{fontSize:12,color:"red"}} >{user_email_error}</div>
         </Grid>
         
         <Grid item xs={12}>
@@ -231,7 +252,7 @@ const SignUp:React.FC= () => {
         value={user_role_id}
       />
            <div> 1: as Manager  2: as Employee</div>
-           <div style={{fontSize:12,color:"red"}} >{ers_passwordError}</div>
+           <div style={{fontSize:12,color:"red"}} >{ers_password_error}</div>
         </Grid>
         
       </Grid>
