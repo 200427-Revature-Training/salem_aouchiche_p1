@@ -5,29 +5,8 @@ import ManagerComponent from './manager';
 import * as H from 'history';
 import {useParams} from 'react-router-dom';
 
-// from typings
-export interface RouteComponentProps<P> {
-match?: match<P>;
-location?: H.Location;
-history?: H.History;
-staticContext?: any;
-}
 
-export interface match<P> {
-params: P;
-isExact: boolean;
-path: string;
-url: string;
-}
-
-interface ViewProps {
-    id?:string;
-   role?:string
-    //name?:string;
- 
-}
-
-const View:React.FC< ViewProps & RouteComponentProps <any>>= (props) => {
+const View:React.FC= () => {
   let param:any = useParams();
   let role= param.Role;
   let id = param.id; 
@@ -38,11 +17,7 @@ const View:React.FC< ViewProps & RouteComponentProps <any>>= (props) => {
     car :"string1"
     
   }
-  console.log(props); 
-  console.log("obj"+JSON.stringify(props)); 
-  console.log("props" + [props][0]);
-
-
+  
   // get id and Role passed from Log-in component using let role= param.Role
   // let id = param.id
   
@@ -110,9 +85,6 @@ const View:React.FC< ViewProps & RouteComponentProps <any>>= (props) => {
      
     </div>
   )
-
-
-
 
 }
 

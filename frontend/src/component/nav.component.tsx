@@ -30,7 +30,7 @@ function Nav() {
          <Typography variant="h6" className={classes.title}>
           Expense Reimbursement
           </Typography>
-          <Button color="secondary" ><Link to ="/SignIn" className="classLink">Sign In</Link></Button>
+          <Button color="secondary" ><Link to ="/" className="classLink">Sign In</Link></Button>
           <Button color="secondary" ><Link to ="/SignUp" className="classLink">Sign Up</Link></Button>
         </Toolbar>
         

@@ -5,7 +5,6 @@ import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
 import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
-import Link from '@material-ui/core/Link';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
@@ -14,6 +13,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
  
 import { useHistory } from "react-router-dom";
+import Link from '@material-ui/core/Link';
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
-
 
 const SignIn:React.FC=()=> {
    
@@ -63,7 +62,6 @@ const SignIn:React.FC=()=> {
 
 const submitHandler = (e:any)=>{
   e.preventDefault(); 
-  
  // console.log("email" +Email);
 let id =22; 
  if(Role){
@@ -135,19 +133,8 @@ let id =22;
           >
             Sign In
           </Button>
-
-          <Grid container>
-            <Grid item xs>
-              <Link href="#" variant="body2">
-                Forgot password?
-              </Link>
-            </Grid>
-            <Grid item>
-              <Link href="#" variant="body2">
-                {"Don't have an account? Sign Up"}
-              </Link>
-            </Grid>
-          </Grid>
+          <Link href="/SignUp"> Link </Link>
+          
         </form>
       </div>
       
