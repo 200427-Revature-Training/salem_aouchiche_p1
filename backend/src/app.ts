@@ -4,6 +4,7 @@ import { db } from './daos/db';
 import bunyan from 'bunyan'; 
 import {userRouter} from './routers/user-router';
 import { reimbursementRouter } from './routers/reimbursement-router';
+import cors from 'cors'; 
 //import{userEmail} from '.'
 
 
@@ -12,6 +13,7 @@ const log = bunyan.createLogger({name: "Project_P1"});
 const port = process.env.port || 3000;
 
 app.set('port', port);
+app.use(cors()); 
 app.use(bodyParser.json());
 
 log.warn('server started');

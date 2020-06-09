@@ -12,7 +12,7 @@ const log = bunyan.createLogger({name: "myProject_P1"});
     //  http://localhost:3000/Users
     // Retrieves an array of Users from database
 
-    userRouter.get('', async(request, response, next)=>{
+userRouter.get('', async(request, response, next)=>{
     await userService.getAllUsers().then(users =>{
         response.set('content-type', 'application/json');
         response.json(users);
@@ -106,7 +106,7 @@ userRouter.post('', async(request, response, next) => {
         console.log('request'+request.body.ers_password);
         const testHash = bcrypt.compareSync(request.body.ers_password, userHashedPassword);  
         console.log('testHash'+testHash); 
-         console.log('userHashedPassword'+userHashedPassword); 
+        console.log('userHashedPassword'+userHashedPassword); 
         
          if(testHash){
             const token= jwt.sign({ers_users_id:userId},"qwertyuiop",{expiresIn:"1h"})

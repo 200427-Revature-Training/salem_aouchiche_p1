@@ -11,7 +11,7 @@ const log = bunyan.createLogger({name: "myProject_P1"});
        Retrieves an array of reimbursement from database
      */ 
 
-    reimbursementRouter.get('', async(request, response, next)=>{
+reimbursementRouter.get('', async(request, response, next)=>{
     await reimbursementService.getAllReimbursements().then(reimbursement =>{
         response.set('content-type', 'application/json');
         response.json(reimbursement);
