@@ -68,7 +68,7 @@ export async function saveReimbursement(reimbursement: Reimbursement): Promise<R
     const result= await db.query<Reimbursement>(sql, [
             reimbursement.reimbursement_amount,
             reimbursement.reimbursement_submitted,
-            reimbursement.reimbursement_resolved,
+            reimbursement.reimbursement_resolved, 
             reimbursement.reimbursement_description,
             reimbursement.reimbursement_receipt,   
             reimbursement.reimbursement_author,
@@ -82,4 +82,29 @@ export async function saveReimbursement(reimbursement: Reimbursement): Promise<R
         return result.rows[0];  
 
 }
+
+/** Update Reimbursement status */
+
+/** the following variables will update: 
+ * * reimbursement_resolved : date that manager resolved the request 
+ * * reimbursement_resolver: name og manager, 
+ * * reimbursement_status_id : update from pending to approuved or deny, 
+ * 
+ */
+
+ export async function updateReimbursement(reimbursement:Reimbursement):Promise<Reimbursement> {
+    //console.log(" dao "); 
+
+    const sql=` UPDATE ERS_REIMBURSEMENT SET REIMBURSEMENT_RESOLVED = COALESCE ($1, REIMBURSEMENT_RESOLVED ), 
+    REIMBURSEMENT_RESOLVER = COALESCE ($2, REIMBURSEMENT_RESOLVER), 
+    REIMBURSEMENT_STATUS_ID = COALESCE ($3, REIMBURSEMENT_STATUS_ID)
+    WHERE ERS_REIMBURSEMENT_ID =$4 RETURNING * `; 
+    const newReimbursement_resolved = reimbursement.reimbursement_resolved && reimbursement.reimbursement_resolved.toISOString(); 
+
+    const updatedReimbursement = [newReimbursement_resolved, reimbursement.reimbursement_resolver, reimbursement.reimbursement_status_id, reimbursement.ers_reimbursement_id]; 
+    const result= await db.query<Reimbursement>(sql, updatedReimbursement);
+    //console.log("result.rows[0] ", result); 
+
+    return result.rows[0]; 
+ }
 

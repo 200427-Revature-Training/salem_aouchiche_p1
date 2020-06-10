@@ -1,4 +1,4 @@
-import express from 'express';
+import express, { response } from 'express';
 import * as reimbursementService from '../services/reimbursement-service'; 
 import bunyan from 'bunyan';
 
@@ -64,3 +64,23 @@ reimbursementRouter.post('', async(request, response, next) => {
     }
     
 });
+
+reimbursementRouter.patch('/update', (request, response,next)=> {
+    console.log("request ", request.body); 
+
+    const reimbursement= request.body; 
+    reimbursementService.updateReimbursement(reimbursement)
+        .then(updatedReimbursement =>{
+            if(updatedReimbursement){
+                response.json(updatedReimbursement);
+            }else{
+                response.status(201);
+            }
+        }).catch(err => {
+            console.log(err); 
+            response.sendStatus(500);
+        }).finally(()=>{
+            next(); 
+        })    
+}); 
+

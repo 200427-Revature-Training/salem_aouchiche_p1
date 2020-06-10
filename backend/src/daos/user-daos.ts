@@ -38,10 +38,6 @@ export async function userExists(userId: number): Promise<boolean> {
     return result.rows[0].exists;
 }
 
-interface Exists {
-    exists: boolean;
-}
-
 
 /*
     function save new User  from user 
@@ -68,8 +64,18 @@ return result.rows[0];
  * function get user by email. 
  */
 
-export async function getUserByEmail(userEmail: String): Promise<User> {
+export async function getUserByEmail(userEmail:string): Promise<User> {
     console.log("userEmail --"+ userEmail ); 
+    
+    /** check if email already exists  */
+    const verifyEmail : Boolean = await verifiedEmail(userEmail);
+
+   
+    if (!verifyEmail) {
+        console.log("this email already exists! "); 
+        return undefined;
+    }
+
     //const sql =`SELECT * FROM ERS_USERS WHERE ERS_USERS_ID = $1`;
     /*
     const sql= `SELECT EU.ERS_USERS_ID, EU.ERS_USERNAME, EU.USER_FIRST_NAME, EU.USER_LAST_NAME, EU.USER_EMAIL, EU.ERS_PASSWORD, EUR.USER_ROLE 
@@ -81,5 +87,20 @@ export async function getUserByEmail(userEmail: String): Promise<User> {
     console.log("userEmail ++"+ userEmail ); 
     console.log(result.rows[0]); 
     return result.rows[0];
+}
+
+/** verify if Email does exist return true   */
+export async function verifiedEmail(userEmail:string): Promise<Boolean>{
+    
+    const sql = `select exists (select ers_users_email from ERS_USERS WHERE ERS_USERS_email = $1); `; 
+    const result = await db.query<Exists>(sql , [userEmail]); 
+    return result.rows[0].exists; 
+
+}
+
+
+/** interface of type boolean */
+interface Exists {
+    exists: boolean;
 }
 

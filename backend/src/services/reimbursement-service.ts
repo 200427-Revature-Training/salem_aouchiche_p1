@@ -40,3 +40,32 @@ export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbu
         return new Promise((resolve, reject) => reject(422));
     }
 }
+
+
+export function updateReimbursement(reimbursement:Reimbursement):Promise<Reimbursement>{
+    console.log("updateReimbursement service "); 
+    const newreimbursement_resolved= reimbursement.reimbursement_resolved && new Date(reimbursement.reimbursement_resolved); 
+    console.log("newreimbursement_resolved ", newreimbursement_resolved); 
+
+    const newReimbursement = new Reimbursement(
+        reimbursement.ers_reimbursement_id,
+        reimbursement.reimbursement_amount, 
+        reimbursement.reimbursement_submitted, 
+        newreimbursement_resolved, 
+        reimbursement.reimbursement_description,
+        reimbursement.reimbursement_receipt,
+        reimbursement.reimbursement_author,
+        reimbursement.reimbursement_resolver,
+        reimbursement.reimbursement_status_id,
+        reimbursement.reimbursement_type_id
+
+        ); 
+        
+    if (!reimbursement.ers_reimbursement_id){
+        throw new Error('400');
+
+    }
+     console.log("newReimbursement ", newReimbursement); 
+    return reimbursementdao.updateReimbursement(newReimbursement); 
+    
+} 
