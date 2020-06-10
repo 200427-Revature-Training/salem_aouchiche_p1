@@ -81,8 +81,7 @@ const View:React.FC= () => {
   return (
    
     <div>
-     {userRole}
-     
+     {userRole}  
     </div>
   )
 

@@ -93,7 +93,7 @@ const SignUp:React.FC= () => {
               ers_username_error= " Username is requiered ! ";
             }
             /** Check Password */
-            if(!(ers_password.length<8)){
+            if(!(ers_password .length>8)){
               ers_password_error="Password is short !";
             }
             
@@ -117,7 +117,7 @@ const SignUp:React.FC= () => {
             if(ers_username_error || ers_password_error|| user_first_name_error||user_last_name_error||user_email_error||user_role_id_error){
                  setFormValues(prevState=>({
                      ...prevState,
-                     ers_username_error, 
+                     ers_username_error:ers_username_error, 
                      ers_password_error:ers_password_error,   
                      user_first_name_error:user_first_name_error,
                      user_last_name_error: user_last_name_error,
@@ -128,10 +128,10 @@ const SignUp:React.FC= () => {
              }
              return true
          }
-
+ 
         const submitHandler= (e:any)=>{
             e.preventDefault()
-            console.log("formValues "+JSON.stringify(formValues));             
+            console.log("formValues ",formValues);             
             const isValidate= validate()
              if(isValidate){
                   axios.post('http://localhost:3000/users/',formValues).then((res)=>{
