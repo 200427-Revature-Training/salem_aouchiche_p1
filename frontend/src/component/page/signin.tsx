@@ -14,6 +14,8 @@ import Container from '@material-ui/core/Container';
  
 import { useHistory } from "react-router-dom";
 import Link from '@material-ui/core/Link';
+import axios from 'axios';
+
 const useStyles = makeStyles((theme) => ({
   paper: {
     marginTop: theme.spacing(8),
@@ -40,15 +42,15 @@ const SignIn:React.FC=()=> {
   let history = useHistory();
   /** initial default values */
   const formDefaultValue={   
-    Email:"",
-    Password:"",
+    user_email:"",
+    ers_password:"",
     Role:"",
-    EmailError:"",
-    PasswordsError:""
+    user_email_error:"",
+    ers_password_error:""
 }
   /** use states */
   const [formValues, setFormValues]=useState(formDefaultValue); 
-  const {Email,Password,EmailError,PasswordsError,Role}=formValues
+  const {user_email,ers_password,user_email_error,ers_password_error,Role}=formValues
   /** update states*/
   const changeHndler=(e:any)=>{
         const target=e.target; 
@@ -59,15 +61,23 @@ const SignIn:React.FC=()=> {
     }
 
 const submitHandler = (e:any)=>{
-  e.preventDefault(); 
- // console.log("email" +Email);
-let id =22; 
- if(Role){
-  history.push(`/View/${Role}/${id}`)
- }
+    e.preventDefault(); 
+    console.log("formValues", formValues)
+    axios.post(`http://localhost:3000/users/user/${user_email}`,formValues)
+      .then((response)=>{
+        //console.log(response.data); 
+        const id = response.data.userId; 
+        const role=response.data.user_role; 
+        const token=response.data.token;  
+        
+        if(token){
+          history.push(`/View/${role}/${id}`); 
+        }
+      })
+
 }
 
-    console.log("email "+Email);
+    console.log("user_email "+user_email);
     console.log("role "+Role);
   return (
     <Container component="main" maxWidth="xs">
@@ -85,25 +95,25 @@ let id =22;
             margin="normal"
             required
             fullWidth
-            id="email"
-            label="Email Address"
-            name="Email"
-            autoComplete="email"
+            id="user_email"
+            label="user_email"
+            name="user_email"
+            autoComplete="user_email"
             autoFocus
             onChange={changeHndler}
-            value={Email}
+            value={user_email}
           />
           <TextField
             variant="outlined"
             margin="normal"
             required
             fullWidth
-            name="Password"
-            label="Password"
-            type="Password"
-            id="Password"
+            name="ers_password"
+            label="ers_password"
+            type="ers_password"
+            id="ers_password"
             onChange={changeHndler}
-            value={Password}
+            value={ers_password}
           />
           <TextField
             variant="outlined"

@@ -134,8 +134,8 @@ const SignUp:React.FC= () => {
             console.log("formValues ",formValues);             
             const isValidate= validate()
              if(isValidate){
-                  axios.post('http://localhost:3000/users/',formValues).then((res)=>{
-                    console.log(res)
+                  axios.post('http://localhost:3000/users/',formValues).then((response)=>{
+                    console.log(response)
                     alert("Signed up")
                  console.log("signed up!");
                  history.push("/")
