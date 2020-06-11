@@ -1,0 +1,14 @@
+Post: reimbursement
+
+  {
+  	"reimbursement_amount":500,
+	"reimbursement_submitted":"2020-06-04",
+	"reimbursement_resolved":"2020-06-09",
+	"reimbursement_description":"reimb description",
+	"reimbursement_receipt":"file receipt2", 
+	"reimbursement_author":3,
+	"reimbursement_resolver":10,
+	"reimbursement_status_id":1,
+	"reimbursement_type_id":1
+        
+    }

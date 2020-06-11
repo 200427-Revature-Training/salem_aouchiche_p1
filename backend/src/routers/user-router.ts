@@ -23,8 +23,6 @@ userRouter.get('', async(request, response, next)=>{
     });
 });
 
-
-
  //    http://localhost:3000/users/1
  //   Retrieves a single user from the database by id
  //   If the users does not exist, sends 404
@@ -46,14 +44,10 @@ userRouter.get('', async(request, response, next)=>{
     next();
 });
 
-
 /*   POST http://localhost:3000/users
     Creates a new user and saves them to the database.
     Returns the inserted data as JSON with status 201.
 */
-
-
-
 userRouter.post('', async(request, response, next) => {
 
    //const user = request.body;  
@@ -93,17 +87,17 @@ userRouter.post('', async(request, response, next) => {
  //   Retrieves a single user from the database by id
  //   If the users does not exist, sends 404
 
- userRouter.get('/user/:email', async (request, response, next) => { 
+ userRouter.post('/user/:email', async (request, response, next) => { 
     const email = request.params.email; 
     console.log("email here:  = " +email);   
     try {
         const user:any = await userService.getUserByEmail(email);  
-        //console.log("user here:  = " +JSON.stringify(user));
+        console.log("user here:  = " , user);
         const userHashedPassword= user.ers_password;
-        //console.log('userHashedPassworers_users_idd'+userHashedPassword);  
+        console.log('userHashedPassworers_users_idd', userHashedPassword);  
         const userId =user.ers_users_id;
-        console.log("userId  "+userId); 
-        console.log('request'+request.body.ers_password);
+        console.log("userId  ", userId); 
+        console.log('request', request.body.ers_password);
         const testHash = bcrypt.compareSync(request.body.ers_password, userHashedPassword);  
         console.log('testHash'+testHash); 
         console.log('userHashedPassword'+userHashedPassword); 

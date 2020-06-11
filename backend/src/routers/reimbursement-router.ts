@@ -1,6 +1,9 @@
 import express, { response } from 'express';
 import * as reimbursementService from '../services/reimbursement-service'; 
 import bunyan from 'bunyan';
+import fileUpload, { UploadedFile } from 'express-fileupload'; 
+import path from 'path';  
+
 
 export const reimbursementRouter = express.Router();
 
@@ -49,11 +52,32 @@ reimbursementRouter.get('', async(request, response, next)=>{
     Creates a New Reimbursement and saves them to the database.
     Returns the inserted data as JSON with status 201.
 */
-
 reimbursementRouter.post('', async(request, response, next) => {
 
-   const reimbursement = request.body;  
-      
+
+   const reimbursement = request.body;
+   console.log("reimbursement ", reimbursement); 
+   //console.log("file ", file); 
+   /* upload file */ 
+   try{
+       if (!request.files){
+           response.send({
+               message: 'No file uploaded !'
+           });
+       }else{
+        /** */   
+        let reimbursement_receipt = request.files.reimbursement_receipt as UploadedFile;
+        
+        /* Use the mv() method to place the file in upload directory: */
+        reimbursement_receipt.mv('./upload/'+ reimbursement_receipt);   
+
+       }
+
+    }catch(err){
+        response.status(500).send(err);
+    }
+
+    /** save reimbursement */
    try {
         const createdNewReimbursement =await reimbursementService.saveReimbursement(reimbursement);
         response.status(201);
@@ -64,6 +88,14 @@ reimbursementRouter.post('', async(request, response, next) => {
     }
     
 });
+
+
+/**
+ *  Patch http://localhost:3000/reimbursement/update
+    Updates Reimbursement and saves them to the database.
+    Returns the inserted data as JSON with status 201.
+    returns status 500 otherwise.
+*/
 
 reimbursementRouter.patch('/update', (request, response,next)=> {
     console.log("request ", request.body); 

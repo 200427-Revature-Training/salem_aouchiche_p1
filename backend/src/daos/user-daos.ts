@@ -85,14 +85,14 @@ export async function getUserByEmail(userEmail:string): Promise<User> {
         FROM ERS_USERS EU JOIN ERS_USER_ROLES EUR ON EU.USER_ROLE_ID= EUR.ERS_USER_ROLES_ID WHERE EU.USER_EMAIL = $1`; 
     const result = await db.query<User>(sql, [userEmail]);
     console.log("userEmail ++"+ userEmail ); 
-    console.log(result.rows[0]); 
+    //console.log(result.rows[0]); 
     return result.rows[0];
 }
 
 /** verify if Email does exist return true   */
 export async function verifiedEmail(userEmail:string): Promise<Boolean>{
     
-    const sql = `select exists (select ers_users_email from ERS_USERS WHERE ERS_USERS_email = $1); `; 
+    const sql = `select exists (SELECT EU.USER_EMAIL FROM ERS_USERS EU WHERE EU.USER_EMAIL = $1); `; 
     const result = await db.query<Exists>(sql , [userEmail]); 
     return result.rows[0].exists; 
 

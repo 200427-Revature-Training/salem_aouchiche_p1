@@ -1,6 +1,9 @@
 import { Reimbursement } from '../models/Reimbursement';
 import * as reimbursementdao from '../daos/reimbursement-daos'
 import { json } from 'body-parser';
+import { response } from 'express';
+import { rejects } from 'assert';
+import { error } from 'console';
 
 export function getAllReimbursements(): Promise<Reimbursement[]> {
     return reimbursementdao.getAllReimbursements();
@@ -12,7 +15,7 @@ export function getReimbursementById(id: number): Promise<Reimbursement> {
 
 
 export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
-    console.log(JSON.stringify(reimbursement))
+    console.log(reimbursement);
     // add new user from the Reimbursements:
     const newReimbursement = new Reimbursement(
         reimbursement.ers_reimbursement_id,
@@ -27,7 +30,8 @@ export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbu
         reimbursement.reimbursement_type_id
 
         ); 
-        
+
+         console.log(newReimbursement);
 
     if(newReimbursement.reimbursement_amount&& newReimbursement.reimbursement_author &&newReimbursement.reimbursement_description &&
          newReimbursement.reimbursement_receipt && newReimbursement.reimbursement_resolved &&newReimbursement.reimbursement_status_id &&
@@ -36,8 +40,9 @@ export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbu
         return reimbursementdao.saveReimbursement(newReimbursement);  
 
     } else {
+    
         // probably issue some kind of 400
-        return new Promise((resolve, reject) => reject(422));
+        return new Promise((resolve, reject) => reject(error));
     }
 }
 
