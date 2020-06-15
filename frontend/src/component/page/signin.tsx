@@ -15,6 +15,7 @@ import Container from '@material-ui/core/Container';
 import { useHistory } from "react-router-dom";
 import Link from '@material-ui/core/Link';
 import axios from 'axios';
+import { FormControl, InputLabel, Select, MenuItem } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -62,10 +63,10 @@ const SignIn:React.FC=()=> {
 
 const submitHandler = (e:any)=>{
     e.preventDefault(); 
-    console.log("formValues", formValues)
+    console.log("formValues", formValues); 
     axios.post(`http://localhost:3000/users/user/${user_email}`,formValues)
       .then((response)=>{
-        //console.log(response.data); 
+        console.log(response.data); 
         const id = response.data.userId; 
         const role=response.data.user_role; 
         const token=response.data.token;  
@@ -74,7 +75,6 @@ const submitHandler = (e:any)=>{
           history.push(`/View/${role}/${id}`); 
         }
       })
-
 }
 
     console.log("user_email "+user_email);
@@ -115,23 +115,15 @@ const submitHandler = (e:any)=>{
             onChange={changeHndler}
             value={ers_password}
           />
-          <TextField
-            variant="outlined"
-            margin="normal"
-            required
-            fullWidth
-            name="Role"
-            label="Role"
-            type="Role"
-            id="Role"
-            onChange={changeHndler}
-            value={Role}
+          
 
-          />
+
+
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"
           />
+
           <Button
             type="submit"
             fullWidth
@@ -141,7 +133,7 @@ const submitHandler = (e:any)=>{
           >
             Sign In
           </Button>
-          <Link href="/SignUp"> Link </Link>
+          <Link href="/SignUp"> Link to signUp </Link>
           
         </form>
       </div>

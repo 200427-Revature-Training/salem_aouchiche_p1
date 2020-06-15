@@ -1,8 +1,7 @@
 import React from 'react';
 import NavComponent from './nav.component';
 import SignUp  from '../component/page/signup'; 
-import SignIn  from './page/signin'; 
-
+import SignIn  from './page/signin';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import EmployeeComponent from './page/employee';
 import View from './page/view';

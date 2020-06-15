@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import { useHistory } from 'react-router';
 import axios from 'axios'; 
+import { FormControl, MenuItem, InputLabel, Select } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -74,7 +75,9 @@ const SignUp:React.FC= () => {
           ...prevState,
           [target.name]:target.value
           }))
+         
         }
+        console.log(formValues)
 
     /** Validation */    
     const validate=()=>{
@@ -93,7 +96,7 @@ const SignUp:React.FC= () => {
               ers_username_error= " Username is requiered ! ";
             }
             /** Check Password */
-            if(!(ers_password .length>8)){
+            if(!(ers_password.length>8)){
               ers_password_error="Password is short !";
             }
             
@@ -135,9 +138,9 @@ const SignUp:React.FC= () => {
             const isValidate= validate()
              if(isValidate){
                   axios.post('http://localhost:3000/users/',formValues).then((response)=>{
-                    console.log(response)
-                    alert("Signed up")
-                 console.log("signed up!");
+                    console.log("response"+ response)
+                    alert("ayou are Signed up")
+                 //console.log("signed up!");
                  history.push("/")
                 })
             }else{
@@ -146,6 +149,11 @@ const SignUp:React.FC= () => {
             }
         }
 
+        
+  const signRole=[
+    "Manager",
+    "Employee"
+  ]
   return (<Container component="main" maxWidth="xs">
   <CssBaseline />
   <div className={classes.paper}>
@@ -238,20 +246,16 @@ const SignUp:React.FC= () => {
         </Grid>
         
         <Grid item xs={12}>
-        <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        name="user_role_id"
-        label="User_role: (1 || 2)"
-        type="user_role_id"
-        id="user_role_id"
-        autoComplete="current-password"
-        onChange={changeHndler}
-        value={user_role_id}
-      />
-           <div> 1: as Manager  2: as Employee</div>
+        <FormControl style={{backgroundColor:'white',width:200,marginBottom:20}} >
+            <InputLabel id="demo-simple-select-label" ><b> role:</b></InputLabel>
+            <Select labelId="demo-simple-select-label" id="demo-simple-select" value={user_role_id} name="user_role_id"
+              onChange={changeHndler} > {signRole.map((signRoleValue) => 
+                ( <MenuItem key={signRoleValue} value={signRoleValue}  >{signRoleValue} </MenuItem>))}
+        
+            </Select>
+ 
+          </FormControl>
+       
            <div style={{fontSize:12,color:"red"}} >{ers_password_error}</div>
         </Grid>
         
