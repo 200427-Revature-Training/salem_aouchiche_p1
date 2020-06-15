@@ -1,0 +1,9 @@
+    Receipt Number 3: Food
+
+
+    "ers_reimbursement_id": ,
+    "reimbursement_amount": 900
+    "reimbursement_submitted": "2020-06-13",
+    "reimbursement_description": " Lodging receipt",
+    "reimbursement_status_id": 2,
+    "reimbursement_type_id":1

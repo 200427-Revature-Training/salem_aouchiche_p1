@@ -1,0 +1,9 @@
+    Receipt Number 1: Food
+
+
+    "ers_reimbursement_id": ,
+    "reimbursement_amount": 100,
+    "reimbursement_submitted": "2020-06-14T07:00:00.000Z",
+    "reimbursement_description": " food receipt",
+    "reimbursement_status_id": 2,
+    "reimbursement_type_id": 3

@@ -8,9 +8,6 @@ import cors from 'cors';
 import fileUpload from 'express-fileupload'; 
 import path from 'path'; 
 
-//import{userEmail} from '.'
-
-
 const app = express();
 const log = bunyan.createLogger({name: "Project_P1"});
 const port = process.env.port || 3000;
@@ -19,11 +16,10 @@ app.set('port', port);
 app.use(cors()); 
 app.use(bodyParser.json());
 
-app.use(express.static(path.join(__dirname , 'public'))); 
-//app.use(fileUpload());
-app.use(fileUpload({
-    createParentPath:true
-})); 
+app.use('/public/', express.static(path.join(__dirname +'/public/')));
+
+app.use(fileUpload({ createParentPath:true })); 
+
 app.use(bodyParser.urlencoded({extended: true}));
 
 log.warn('server started');

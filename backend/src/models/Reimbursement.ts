@@ -3,11 +3,11 @@ export class Reimbursement {
     ers_reimbursement_id?:       number; 
     reimbursement_amount:       number; 
     reimbursement_submitted:    Date;  
-    reimbursement_resolved :    Date;
+    reimbursement_resolved? :    Date;
     reimbursement_description:  string;
     reimbursement_receipt:      string; 
     reimbursement_author :      number; 
-    reimbursement_resolver:     string; 
+    reimbursement_resolver?:     string; 
     reimbursement_status_id:    number; 
     reimbursement_type_id :     number; 
 
@@ -56,11 +56,11 @@ export interface reimbursementTable {
     ers_reimbursement_id?:       number; 
     reimbursement_amount:       number; 
     reimbursement_submitted:    Date;  
-    reimbursement_resolved :    Date;
+    reimbursement_resolved? :    Date;
     reimbursement_description:  string;
     reimbursement_receipt:      string; 
     reimbursement_author :      number; 
-    reimbursement_resolver:     string; 
+    reimbursement_resolver?:     string; 
     reimbursement_status_id:    number; 
     reimbursement_type_id :     number; 
 }

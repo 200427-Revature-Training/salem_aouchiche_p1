@@ -15,7 +15,7 @@ export function getReimbursementById(id: number): Promise<Reimbursement> {
 
 
 export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbursement> {
-    console.log(reimbursement);
+    console.log("reimbursement from save service ", reimbursement);
     // add new user from the Reimbursements:
     const newReimbursement = new Reimbursement(
         reimbursement.ers_reimbursement_id,
@@ -33,8 +33,9 @@ export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbu
 
          console.log(newReimbursement);
 
-    if(newReimbursement.reimbursement_amount&& newReimbursement.reimbursement_author &&newReimbursement.reimbursement_description &&
-         newReimbursement.reimbursement_receipt && newReimbursement.reimbursement_resolved &&newReimbursement.reimbursement_status_id &&
+    if(newReimbursement.reimbursement_amount&& newReimbursement.reimbursement_author 
+        &&newReimbursement.reimbursement_description &&
+         newReimbursement.reimbursement_receipt &&newReimbursement.reimbursement_status_id &&
         newReimbursement.reimbursement_submitted  && newReimbursement.reimbursement_type_id) {
         // submit to DAO
         return reimbursementdao.saveReimbursement(newReimbursement);  
@@ -42,15 +43,15 @@ export function  saveReimbursement(reimbursement: Reimbursement): Promise<Reimbu
     } else {
     
         // probably issue some kind of 400
-        return new Promise((resolve, reject) => reject(error));
+        return new Promise((resolve, reject) => reject(422));
     }
 }
 
 
 export function updateReimbursement(reimbursement:Reimbursement):Promise<Reimbursement>{
-    console.log("updateReimbursement service "); 
+    //console.log("updateReimbursement service "); 
     const newreimbursement_resolved= reimbursement.reimbursement_resolved && new Date(reimbursement.reimbursement_resolved); 
-    console.log("newreimbursement_resolved ", newreimbursement_resolved); 
+    //console.log("newreimbursement_resolved ", newreimbursement_resolved); 
 
     const newReimbursement = new Reimbursement(
         reimbursement.ers_reimbursement_id,
@@ -70,7 +71,7 @@ export function updateReimbursement(reimbursement:Reimbursement):Promise<Reimbur
         throw new Error('400');
 
     }
-     console.log("newReimbursement ", newReimbursement); 
+    // console.log("newReimbursement ", newReimbursement); 
     return reimbursementdao.updateReimbursement(newReimbursement); 
     
 } 
