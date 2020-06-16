@@ -22,7 +22,7 @@ const View:React.FC= () => {
   let id = param.id; 
   
   console.log("param" +JSON.stringify( param));
-  console.log("role" + id); 
+  console.log("role if from view: " + id); 
 
 
   /** send data to backend: */
@@ -77,12 +77,16 @@ const View:React.FC= () => {
   /**  get all employees reimbursement  */
   const getAllEmployeelReimbursement =()=> {
     axios.get(`http://localhost:3000/reimbursement`).then((response)=>{
+      console.log(id)
 
       console.log("response data from get ALL  ", response.data); 
       const data=response.data
       setPosts(data); 
-      console.log(data); 
-       
+      console.log(data);   
+      let index = data.find((post: { resolver_id: any; }) => post.resolver_id== id );
+      console.log("id index ",index );
+      setpostManagerFirstName(index.resolver_firstname); 
+      setPostManagerLasttName(index.resolver_lastname); 
   })
 }  
 
@@ -167,13 +171,17 @@ const View:React.FC= () => {
   // the data u get from the use effect pass it as an arguement to [posts, setPosts] = useState(data);
   const [posts, setPosts] = useState<any>([]);
   
-  const [type, setType] =useState("");   
+  const [postManagerFirstName , setpostManagerFirstName]= useState(); 
+  const [postManagerLasttName , setPostManagerLasttName]= useState(); 
+  
+  console.log("postManagerFirstName", postManagerFirstName); 
+
   let userComponent=null
   
     if(role==="Manager"){
       userComponent=(
 
-        <ManagerComponent  denied={deny} approved={Approve}  obj={posts}/> )
+        <ManagerComponent  denied={deny} approved={Approve}  obj={posts} profileFirstName={postManagerFirstName} profileLasttName={postManagerLasttName}/> )
     }
     if(role==="Employee"){
       userComponent=(

@@ -54,7 +54,8 @@ const SignUp:React.FC= () => {
         user_role_id_error:""
   }
 
-  const [formValues, setFormValues]=useState(formDefaultValue)
+  const [formValues, setFormValues]=useState<any>(formDefaultValue)
+
     let { ers_username, 
           ers_password, 
           user_first_name,
@@ -71,9 +72,10 @@ const SignUp:React.FC= () => {
 
     const changeHndler=(e:any)=>{
           const target=e.target; 
-          setFormValues(prevState=>({
+          setFormValues((prevState: any)=>({
           ...prevState,
           [target.name]:target.value
+
           }))
          
         }
@@ -116,9 +118,10 @@ const SignUp:React.FC= () => {
             if(!user_role_id){
               user_role_id_error="user_role_id is requiered !";
             }
+            
                          
             if(ers_username_error || ers_password_error|| user_first_name_error||user_last_name_error||user_email_error||user_role_id_error){
-                 setFormValues(prevState=>({
+                 setFormValues((prevState: any)=>({
                      ...prevState,
                      ers_username_error:ers_username_error, 
                      ers_password_error:ers_password_error,   
@@ -131,15 +134,24 @@ const SignUp:React.FC= () => {
              }
              return true
          }
+
  
         const submitHandler= (e:any)=>{
             e.preventDefault()
-            console.log("formValues ",formValues);             
+            if(user_role_id=="Manager"){
+              formValues.user_role_id=1; 
+              //console.log("formValues after changed role: ", formValues); 
+            }
+            if(user_role_id=="Employee"){
+              formValues.user_role_id=2; 
+              //console.log("formValues after changed role: ", formValues); 
+            }
+            console.log("formValues on submit handler:  ",formValues);             
             const isValidate= validate()
              if(isValidate){
                   axios.post('http://localhost:3000/users/',formValues).then((response)=>{
                     console.log("response"+ response)
-                    alert("ayou are Signed up")
+                    alert("you are Signed up")
                  //console.log("signed up!");
                  history.push("/")
                 })

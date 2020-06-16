@@ -60,21 +60,61 @@ const SignIn:React.FC=()=> {
           [target.name]:target.value
         }))
     }
+    /** Validation */    
+    const validate=()=>{
+      let ers_password_error ="";
+      let user_email_error=""; 
+      /** Check Password */
+      if(!(ers_password.length>8)){
+        ers_password_error="Password is short !";
+      }
+     
+      /** Check email */
+      if(!user_email.includes("@")){
+         user_email_error="user_email is invalid !";
+      }
+     
+      if( ers_password_error ||user_email_error){
+           setFormValues((prevState: any)=>({
+               ...prevState,
+
+               ers_password_error:ers_password_error,   
+               user_email_error:user_email_error,
+               
+             }))
+           return false
+       }
+       return true
+   }
+
 
 const submitHandler = (e:any)=>{
     e.preventDefault(); 
-    console.log("formValues", formValues); 
-    axios.post(`http://localhost:3000/users/user/${user_email}`,formValues)
-      .then((response)=>{
-        console.log(response.data); 
-        const id = response.data.userId; 
-        const role=response.data.user_role; 
-        const token=response.data.token;  
+
+    const isValidate= validate()
+             if(isValidate){
+                axios.post(`http://localhost:3000/users/user/${user_email}`,formValues)
+                .then((response)=>{
+                  console.log(response.data); 
+                  const id = response.data.userId; 
+                  const role=response.data.user_role; 
+                  const token=response.data.token;  
+                  
+                  if(token){
+                    history.push(`/View/${role}/${id}`); 
+                  }
+                })
+
+             }else{
+              //console.log("error occurred!");
+              setFormValues(prevState=>({
+                ...prevState,               
+                EmailError:"Email Address or Password are incorrect",               
+                }))
         
-        if(token){
-          history.push(`/View/${role}/${id}`); 
-        }
-      })
+             }
+    console.log("formValues", formValues); 
+    
 }
 
     console.log("user_email "+user_email);
@@ -103,6 +143,7 @@ const submitHandler = (e:any)=>{
             onChange={changeHndler}
             value={user_email}
           />
+          <div style={{fontSize:12,color:"red"}} >{user_email_error}</div>
           <TextField
             variant="outlined"
             margin="normal"
@@ -115,10 +156,8 @@ const submitHandler = (e:any)=>{
             onChange={changeHndler}
             value={ers_password}
           />
+          <div style={{fontSize:12,color:"red"}} >{ers_password_error}</div>
           
-
-
-
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
             label="Remember me"

@@ -72,14 +72,18 @@ const StyledTableRow = withStyles(theme => ({
               resolver_lastname: string 
           }[],
           denied?:Function,
-          approved?:Function
+          approved?:Function,
+          profileFirstName?:string,
+          profileLasttName?:string
 
     }
 
   const ManagerComponent:React.FC<ManagerComponentProps>=(props)=> {
       
       //this useEffect watch for any change in the props passed from View component
-      const viewData:any=props.obj 
+      const viewData:any=props.obj
+      const profileFirstName:any= props.profileFirstName
+      const profileLastName:any= props.profileLasttName
      let  denied:any=props.denied
      let approved:any=props.approved
       const classes = useStyles();
@@ -117,16 +121,13 @@ const StyledTableRow = withStyles(theme => ({
       result = viewData.filter((post: { reimb_status: any; }) => post.reimb_status == status);
      //let result = viewData.filter(viewData.reimb_status
      setPosts(result)
-
-      
     }
     
     if(status==="Pending"){
-
        result = viewData.filter((post: { reimb_status: any; }) => post.reimb_status == status);
-       setPosts(result)
-       
+       setPosts(result)  
      }
+     
     if(status==='Denied'){
        result = viewData.filter((post: { reimb_status: any; }) => post.reimb_status == status);
       //console.log(typeof result)
@@ -139,7 +140,6 @@ const StyledTableRow = withStyles(theme => ({
       }
      
   };
-  console.log('rava', posts); 
   
 const requestStatus1=[
   'approved',
@@ -174,7 +174,7 @@ let select= null;
     <React.Fragment>
      
         <TableContainer component={Paper}>
-        <h3> WELCOME: <b>{posts.map((post:any) => post.resolver_firstname)[0]} {posts.map((post:any) => post.resolver_lastname)[0]} </b> </h3>
+  <h3> WELCOME: <b> {profileFirstName} {profileLastName}</b> </h3>
         <div>{select}</div>
           <Table className={classes.table} aria-label="customized table">
           
